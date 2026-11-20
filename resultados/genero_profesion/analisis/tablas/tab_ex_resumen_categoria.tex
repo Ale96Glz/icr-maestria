@@ -1,0 +1,25 @@
+\begin{table}[H]
+\centering\footnotesize
+\setlength{\tabcolsep}{3pt}
+\caption{Resumen por métrica con IC95\% bootstrap (n=30 configs, 10\,000 re-muestras).}
+\label{tab:ex_resumen_categoria}
+\begin{tabularx}{\linewidth}{@{} Y r r r r r r @{}}
+\toprule
+\textbf{Métrica} & \textbf{Media} & \textbf{IC95\%} & \textbf{Med.} & \textbf{Mín.} & \textbf{Máx.} & \textbf{n+/n} \\
+\midrule
+StereoSet inter -- género ($\Delta$SS, p.p.) & 3,333 & [2,011; 4,683] & 3,099 & -2,893 & 9,504 & 23/30 \\
+StereoSet inter -- profesión ($\Delta$SS, p.p.) & 2,475 & [1,669; 3,277] & 2,297 & -3,144 & 7,497 & 27/30 \\
+StereoSet intra -- género ($\Delta$SS, p.p.) & 1,359 & [0,092; 2,562] & 2,157 & -7,451 & 6,667 & 20/30 \\
+StereoSet intra -- profesión ($\Delta$SS, p.p.) & 2,535 & [1,881; 3,177] & 2,778 & -2,346 & 6,296 & 27/30 \\
+CrowS-Pairs -- género ($\Delta$STS, p.p.) & 4,046 & [2,888; 5,242] & 3,626 & -0,763 & 12,214 & 27/30 \\
+CrowS-Pairs -- socio/prof. ($\Delta$STS, p.p.) & -0,233 & [-2,112; 1,686] & -0,872 & -12,209 & 12,209 & 11/30 \\
+BOLD -- $\Delta$rg\_gap género & -0,013 & [-0,024; -0,003] & -0,008 & -0,078 & 0,032 & 10/30 \\
+BOLD -- $\Delta$rg\_gap profesión & 0,164 & [0,120; 0,209] & 0,124 & -0,119 & 0,362 & 29/30 \\
+BOLD -- $\Delta$regard género & -0,083 & [-0,140; -0,029] & -0,008 & -0,361 & 0,139 & 11/30 \\
+BOLD -- $\Delta$regard profesión & 0,050 & [-0,016; 0,119] & 0,003 & -0,177 & 0,428 & 15/30 \\
+$M_{GP}$ (compuesta, p.p.) & 2,253 & [1,456; 3,044] & 2,402 & -1,816 & 5,625 & 25/30 \\
+$\mathrm{MEI}_{GP}$ & 0,451 & [0,262; 0,658] & 0,231 & -0,310 & 1,853 & 25/30 \\
+\bottomrule
+\end{tabularx}
+\par\smallskip\footnotesize Med. = mediana; n+ = número de configs con $\Delta>0$ (mejora).
+\end{table}

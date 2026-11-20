@@ -1,0 +1,86 @@
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "fontSize": "20px",
+    "fontFamily": "Segoe UI, Helvetica, Arial, sans-serif"
+  },
+  "flowchart": {
+    "nodeSpacing": 25,
+    "rankSpacing": 60,
+    "padding": 18,
+    "htmlLabels": true,
+    "curve": "basis"
+  }
+}}%%
+
+%% Flujo experimental (Figura en ICRv7).
+%% Layout diagonal: F1 arriba-izq → F2 centro → F3 abajo-der
+
+graph LR
+    classDef dataset fill:#fff3e0,stroke:#ef6c00,stroke-width:2px,color:#e65100
+    classDef tokenProc fill:#e1f5fe,stroke:#0277bd,stroke-width:1.5px,color:#01579b
+    classDef lora fill:#e8eaf6,stroke:#303f9f,stroke-width:2px,color:#1a237e
+    classDef escala fill:#fff9c4,stroke:#f9a825,stroke-width:2.5px,color:#f57f17
+    classDef pesos fill:#f1f8e9,stroke:#558b2f,stroke-width:1.5px,color:#33691e
+    classDef evalProc fill:#ede7f6,stroke:#5e35b1,stroke-width:1.5px,color:#311b92
+    classDef bench fill:#e0f7fa,stroke:#00838f,stroke-width:2px,color:#006064
+    classDef metricaS fill:#ffebee,stroke:#c62828,stroke-width:2px,color:#b71c1c
+    classDef metricaR fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20
+    classDef resultado fill:#fce4ec,stroke:#ad1457,stroke-width:2.5px,color:#880e4f
+
+    %% ── FASE 1 — Arriba-izquierda ──
+    subgraph F1["<b>FASE 1</b> — Preparación de los datos"]
+        direction TB
+        D1["<b>Dataset I · STEM</b><br/>Pares contrafactuales en<br/>dominio técnico-científico"]
+        D2["<b>Dataset II · Roles de género</b><br/>Facetas: liderazgo,<br/>resiliencia, empatía…"]
+        D1 --> T1["Tokenización con<br/><b>prompting de género</b>"]
+        D2 --> T2["<b>Inyección directa</b><br/>de pares contrafactuales"]
+    end
+
+    %% ── FASE 2 — Centro ──
+    %% LORA es el nodo tope para que la conexión desde F1 llegue arriba
+    subgraph F2["<b>FASE 2</b> — Arquitectura y Entrenamiento"]
+        direction TB
+        LORA["<b>LoRA / QLoRA</b><br/>5 Modelos decoder-only<br/>Módulos Attention + MLP<br/><i>Pesos base congelados</i>"]
+        LORA --> ESCALA{"<b>Escalado Paramétrico</b><br/>2 corpora × 5 modelos × 3 niveles<br/><b>= 30 entrenamientos</b>"}
+        ESCALA -->|"≈ 1 %"| P1["1 % Pesos"]
+        ESCALA -->|"≈ 2 %"| P2["2 % Pesos"]
+        ESCALA -->|"≈ 3 %"| P3["3 % Pesos"]
+    end
+
+    %% ── FASE 3 — Abajo-derecha ──
+    subgraph F3["<b>FASE 3</b> — Evaluación y Contraste"]
+        direction TB
+        VS["Modelo con adaptador<br/><b>vs.</b><br/>Modelo base sin LoRA"]
+        VS --> BENCH["<b>Benchmarks</b><br/>StereoSet · CrowS-Pairs · BOLD"]
+        BENCH --> SESGO["<b>Métricas de Sesgo</b><br/>Stereotype Score · PLL · Regard"]
+        BENCH --> REND["<b>Métricas de Rendimiento</b><br/>LMS · ICAT"]
+        SESGO --> TRADEOFF(["<b>Análisis del trade-off</b><br/>equidad ⇔ rendimiento"])
+        REND --> TRADEOFF
+    end
+
+    %% ── Conexiones inter-fase (diagonal ↘) ──
+    %% F1 fondo → F2 tope: empuja F1 ARRIBA de F2
+    T1 --> LORA
+    T2 --> LORA
+    %% F2 fondo → F3 tope: empuja F2 ARRIBA de F3
+    P1 --> VS
+    P2 --> VS
+    P3 --> VS
+
+    %% ── Asignación de clases ──
+    class D1,D2 dataset
+    class T1,T2 tokenProc
+    class LORA lora
+    class ESCALA escala
+    class P1,P2,P3 pesos
+    class VS evalProc
+    class BENCH bench
+    class SESGO metricaS
+    class REND metricaR
+    class TRADEOFF resultado
+
+    %% ── Estilo de subgrafos ──
+    style F1 fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1
+    style F2 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20
+    style F3 fill:#f3e5f5,stroke:#6a1b9a,stroke-width:2px,color:#4a148c

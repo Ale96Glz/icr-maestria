@@ -1,0 +1,5 @@
+variante,dimensiones,frente_1,capas,pct_pares_comp
+12-D sin ICAT (2 LMS agregados),12,29,29 + 1,1.1
+14-D sin ICAT (4 LMS dominio),14,29,29 + 1,0.9
+5 fam. sin ICAT (LMS media 2),5,16,16 + 7 + 7,
+5 fam. sin ICAT (LMS media 4),5,13,13 + 9 + 8,

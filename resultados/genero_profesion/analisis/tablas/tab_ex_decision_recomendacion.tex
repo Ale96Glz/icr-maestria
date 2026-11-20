@@ -1,0 +1,18 @@
+\begin{table}[H]
+\centering\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption{Configuraciones recomendadas según criterio.}
+\label{tab:ex_decision_recomendacion}
+\begin{tabularx}{\linewidth}{@{} L Y r r r r @{}}
+\toprule
+\textbf{Criterio} & \textbf{Configuración} & \textbf{$M_{GP}$} & \textbf{IC95\%} & \textbf{$\delta_{LMS}$} & \textbf{MEI$_{GP}$} \\
+\midrule
+Mejor $M_{GP}$ global & GPT-2 Base, Dataset + prompt, 3\% LoRA & 5,62 & [4,32; 7,41] & +3,44 & 1,64 \\
+Mejor $\mathrm{MEI}_{GP}$ global & GPT-2 Base, Dataset + prompt, 1\% LoRA & 5,11 & [3,12; 7,09] & +2,76 & 1,85 \\
+Mejor $\mathrm{MEI}_{GP}$ en GPT-2 & GPT-2 Base, Dataset + prompt, 1\% LoRA & 5,11 & [3,12; 7,09] & +2,76 & 1,85 \\
+Mejor $\mathrm{MEI}_{GP}$ en Llama & Llama 3.2-3B, Dataset + prompt, 1\% LoRA & 5,49 & [2,22; 9,06] & +9,78 & 0,56 \\
+Mejor $M_{GP}$ con Dataset & Llama 3.2-3B, Dataset, 3\% LoRA & 5,45 & [2,97; 8,04] & +14,05 & 0,39 \\
+Mejor $M_{GP}$ con Dataset + prompt & GPT-2 Base, Dataset + prompt, 3\% LoRA & 5,62 & [4,32; 7,41] & +3,44 & 1,64 \\
+\bottomrule
+\end{tabularx}
+\end{table}

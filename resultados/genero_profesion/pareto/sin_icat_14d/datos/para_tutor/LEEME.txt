@@ -1,0 +1,11 @@
+Variante 14-D sin ICAT (4 LMS por dominio)
+============================================
+
+Vector: 4 SS + 4 LMS + 2 STS + 2 regard + 2 brecha = 14 dimensiones.
+LMS: inter/intra x genero/profesion (no agregados).
+
+Archivos:
+- vectores_y_frentes_14d.csv
+- vectores_bruto_y_norm_14d.csv
+
+Generado con: python scripts/pareto_sin_icat_14d.py

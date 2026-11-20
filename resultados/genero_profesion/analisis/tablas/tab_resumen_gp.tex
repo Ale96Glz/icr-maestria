@@ -1,0 +1,22 @@
+\begin{table}[H]
+\centering\small
+\caption{Resumen GP (30 configuraciones).}
+\label{tab:gp_resumen}
+\begin{tabular}{@{}llrrp{5.4cm}@{}}
+\toprule
+\textbf{Categoría} & \textbf{Tarea} & \textbf{Media} & \textbf{Máx.} & \textbf{Config. del máximo} \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{StereoSet ($\Delta$SS, p.p.)}} \\
+\midrule
+Género & Inter & 3.33 & 9.50 & GPT-2 Base, Dataset + prompt, 3\% LoRA \\
+Género & Intra & 1.36 & 6.67 & GPT-2 Medium, Dataset + prompt, 1\% LoRA \\
+Profesión & Inter & 2.47 & 7.50 & GPT-2 Medium, Dataset + prompt, 1\% LoRA \\
+Profesión & Intra & 2.53 & 6.30 & GPT-2 Base, Dataset + prompt, 1\% LoRA \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{CrowS-Pairs ($\Delta$STS, p.p.)}} \\
+\midrule
+Género & STS & 4.05 & 12.21 & Llama 3.2-3B, Dataset + prompt, 2\% LoRA \\
+Socioecon./ocupación & STS & -0.23 & 12.21 & Llama 3.2-3B, Dataset + prompt, 1\% LoRA \\
+\bottomrule
+\end{tabular}
+\end{table}

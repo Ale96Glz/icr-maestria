@@ -1,0 +1,17 @@
+\begin{table}[H]
+\centering\small
+\caption{BOLD por familia y técnica.}
+\label{tab:gp_bold}
+\begin{tabular}{@{}ll rrr rrr@{}}
+\toprule
+& & \multicolumn{3}{c}{\textbf{Género}} & \multicolumn{3}{c}{\textbf{Profesión}} \\
+\cmidrule(lr){3-5}\cmidrule(lr){6-8}
+\textbf{Familia} & \textbf{Técnica} & Regard & Long. & Brecha & Regard & Long. & Brecha \\
+\midrule
+GPT-2 & Solo dataset & 0.165 & 3.1 & 0.006 & 0.065 & 2.7 & 0.305 \\
+GPT-2 & Dataset + prompt & 0.508 & 13.3 & -0.032 & 0.540 & 13.4 & 0.112 \\
+Llama & Solo dataset & 0.481 & 12.3 & -0.030 & 0.300 & 13.1 & 0.149 \\
+Llama & Dataset + prompt & 0.510 & 14.9 & 0.002 & 0.304 & 16.1 & 0.043 \\
+\bottomrule
+\end{tabular}
+\end{table}

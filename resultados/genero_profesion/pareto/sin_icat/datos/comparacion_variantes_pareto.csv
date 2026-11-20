@@ -1,0 +1,5 @@
+variante,dimensiones,frente_1,capas,pct_pares_comp,nota
+16-D (con ICAT),16,29,2 (29+1),1.1,analisis original
+12-D (sin ICAT),12,29,29 + 1,1.1,peticion tutor
+6 familias (con ICAT),6,16,16+7+7,,operativo previo
+5 familias (sin ICAT),5,16,16 + 7 + 7,,analogo sin ICAT

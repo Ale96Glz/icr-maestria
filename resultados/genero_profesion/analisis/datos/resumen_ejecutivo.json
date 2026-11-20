@@ -1,0 +1,85 @@
+{
+  "n_configs": 30,
+  "M_gp_mean": 2.2526403022514825,
+  "M_gp_max_config": "GPT-2 Base | D+p | 3%",
+  "M_gp_max_value": 5.624617801055877,
+  "MEI_gp_max_config": "GPT-2 Base | D+p | 1%",
+  "MEI_gp_max_value": 1.8527377543661565,
+  "M_stereo_gp_mean": 2.4256496065815525,
+  "delta_lms_avg_mean": 6.9719593078833135,
+  "anova_top_factor": "C(technique)",
+  "wilcoxon_global": [
+    {
+      "metrica": "$\\Delta$SS inter género",
+      "p": 0.00025701276609630476,
+      "n_mejoran": 23,
+      "n": 30
+    },
+    {
+      "metrica": "$\\Delta$SS inter profesión",
+      "p": 3.2525299900560146e-05,
+      "n_mejoran": 27,
+      "n": 30
+    },
+    {
+      "metrica": "$\\Delta$SS intra género",
+      "p": 0.031477420610707255,
+      "n_mejoran": 20,
+      "n": 30
+    },
+    {
+      "metrica": "$\\Delta$SS intra profesión",
+      "p": 9.769954991844687e-06,
+      "n_mejoran": 27,
+      "n": 30
+    },
+    {
+      "metrica": "$\\Delta$STS género",
+      "p": 3.894056164281242e-06,
+      "n_mejoran": 27,
+      "n": 30
+    },
+    {
+      "metrica": "$\\Delta$STS socio (repr. prof.)",
+      "p": 0.6817533361580095,
+      "n_mejoran": 11,
+      "n": 30
+    },
+    {
+      "metrica": "$\\Delta$LMS inter (coste)",
+      "p": 2.1253203734574536e-06,
+      "n_mejoran": 29,
+      "n": 30
+    },
+    {
+      "metrica": "$\\Delta$LMS intra (coste)",
+      "p": 1.733306644199106e-06,
+      "n_mejoran": 30,
+      "n": 30
+    },
+    {
+      "metrica": "$\\Delta$rg\\_gap género (BOLD)",
+      "p": 0.036434996873140335,
+      "n_mejoran": 10,
+      "n": 30
+    },
+    {
+      "metrica": "$\\Delta$rg\\_gap profesión (BOLD)",
+      "p": 2.0489096641540527e-07,
+      "n_mejoran": 29,
+      "n": 30
+    },
+    {
+      "metrica": "$\\Delta$regard género (BOLD)",
+      "p": 0.06989291124045849,
+      "n_mejoran": 11,
+      "n": 30
+    },
+    {
+      "metrica": "$\\Delta$regard profesión (BOLD)",
+      "p": 0.3817984350025654,
+      "n_mejoran": 15,
+      "n": 30
+    }
+  ]
+}

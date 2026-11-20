@@ -1,0 +1,15 @@
+\begin{table}[H]
+\centering\footnotesize
+\caption{Promedios por celda familia $\times$ técnica (GPT-2: $n=9$; Llama: $n=6$).}
+\label{tab:ex_familia_x_tecnica}
+\begin{tabular}{@{}llrrrrrr@{}}
+\toprule
+\textbf{Familia} & \textbf{Técnica} & \textbf{n} & \textbf{$M_{stereo}$} & \textbf{$M_{GP}$} & \textbf{$\delta_{LMS}$} & \textbf{$\Delta$rg gen} & \textbf{$\Delta$rg prof} \\
+\midrule
+GPT-2 & Dataset & 9 & 0,92 & 0,23 & +7,49 & +0,006 & +0,305 \\
+GPT-2 & Dataset + prompt & 9 & 5,26 & 4,28 & +3,68 & -0,032 & +0,112 \\
+Llama & Dataset & 6 & 0,55 & 1,29 & +8,08 & -0,030 & +0,149 \\
+Llama & Dataset + prompt & 6 & 2,31 & 3,21 & +10,02 & +0,002 & +0,043 \\
+\bottomrule
+\end{tabular}
+\end{table}

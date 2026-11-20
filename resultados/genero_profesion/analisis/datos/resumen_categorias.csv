@@ -1,0 +1,7 @@
+categoria,benchmark,tarea,media_pp,max_pp,config_maximo
+Género,StereoSet,Inter,3.333333333333334,9.504132231404952,"GPT-2 Base, Dataset + prompt, 3% LoRA"
+Género,StereoSet,Intra,1.3594771241830053,6.666666666666657,"GPT-2 Medium, Dataset + prompt, 1% LoRA"
+Profesión,StereoSet,Inter,2.474808544941559,7.496977025392987,"GPT-2 Medium, Dataset + prompt, 1% LoRA"
+Profesión,StereoSet,Intra,2.5349794238683137,6.2962962962962905,"GPT-2 Base, Dataset + prompt, 1% LoRA"
+Género,CrowS-Pairs,STS,4.045801526717564,12.21374045801528,"Llama 3.2-3B, Dataset + prompt, 2% LoRA"
+Socioecon./ocupación,CrowS-Pairs,STS,-0.23255813953488366,12.20930232558139,"Llama 3.2-3B, Dataset + prompt, 1% LoRA"

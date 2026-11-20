@@ -1,0 +1,33 @@
+Paquete para el tutor — vectores y frentes Pareto (SIN ICAT)
+================================================================
+
+Petición: vector de métricas asociado a cada configuración y frente (rango) Pareto.
+
+Convenciones
+------------
+- 30 configuraciones = modelo x ruta x % LoRA.
+- Valores BRUTOS: métricas absolutas del benchmark con LoRA activo (como en el CSV fuente).
+- Valores NORM: transformados a [0, 1], mayor = mejor (misma regla que en la tesis).
+- Sin ICAT: se excluyen las 4 métricas ICAT; el vector tiene 12 dimensiones.
+- frente_pareto = rango de no dominancia (1 = primer frente, 2 = segundo, etc.).
+
+Resultados clave
+----------------
+- Pareto 12-D: frentes 2 capas, tamaños [29, 1]
+- Pareto 5 familias (SS, LMS, STS, Regard, Brecha Regard): frentes 3 capas, tamaños [16, 7, 7]
+
+Archivos
+--------
+- 01_vectores_y_frente_12d_sin_icat.csv
+- 02_vectores_y_frente_5familias_sin_icat.csv
+- 03_tabla_resumen_vectores_y_frentes.csv
+- 04_resumen_frentes_por_capas.csv
+
+Recomendación de lectura
+-----------------------
+1. 03_tabla_resumen_vectores_y_frentes.csv  → vista compacta (frente + vector 12-D).
+2. 01_vectores_y_frente_12d_sin_icat.csv    → bruto + normalizado + frente sobre 12-D.
+3. 02_vectores_y_frente_5familias_sin_icat.csv → vector 5 familias + frente operativo.
+4. 04_resumen_frentes_por_capas.csv         → quién está en cada frente (listado).
+
+Generado con: python scripts/export_vectores_tutor.py

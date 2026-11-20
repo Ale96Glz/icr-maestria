@@ -1,0 +1,25 @@
+\begin{table}[H]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\caption{Pruebas pareadas baseline vs. LoRA (n=30 configs). Cohen's $d$ pareado, Cliff's $\delta$, Wilcoxon y prueba de signos.}
+\label{tab:ex_estadistica_inferencial}
+\begin{tabularx}{\linewidth}{@{} Y r r r r r r @{}}
+\toprule
+\textbf{Métrica} & \textbf{Media $\Delta$} & \textbf{IC95\%} & \textbf{$d$} & \textbf{$\delta$} & \textbf{$p_W$} & \textbf{n+/30 ($p_s$)} \\
+\midrule
+$\Delta$SS inter género & 3,333 & [2,011; 4,683] & 0,87 & 0,50 & \textless 0,001 & 23/30 (0,003) \\
+$\Delta$SS inter profesión & 2,475 & [1,669; 3,277] & 1,08 & 0,63 & \textless 0,001 & 27/30 (\textless 0,001) \\
+$\Delta$SS intra género & 1,359 & [0,092; 2,562] & 0,39 & 0,31 & 0,031 & 20/30 (0,049) \\
+$\Delta$SS intra profesión & 2,535 & [1,881; 3,177] & 1,38 & 0,71 & \textless 0,001 & 27/30 (\textless 0,001) \\
+$\Delta$STS género & 4,046 & [2,888; 5,242] & 1,20 & 0,66 & \textless 0,001 & 27/30 (\textless 0,001) \\
+$\Delta$STS socio (repr. prof.) & -0,233 & [-2,112; 1,686] & -0,04 & -0,17 & 0,682 & 11/30 (0,951) \\
+$\Delta$LMS inter (coste) & 6,712 & [4,907; 8,559] & 1,31 & 0,72 & \textless 0,001 & 29/30 (\textless 0,001) \\
+$\Delta$LMS intra (coste) & 7,232 & [5,722; 8,843] & 1,65 & 0,97 & \textless 0,001 & 30/30 (\textless 0,001) \\
+$\Delta$rg\_gap género (BOLD) & -0,013 & [-0,024; -0,003] & -0,44 & -0,27 & 0,036 & 10/30 (0,979) \\
+$\Delta$rg\_gap profesión (BOLD) & 0,164 & [0,120; 0,209] & 1,29 & 0,60 & \textless 0,001 & 29/30 (\textless 0,001) \\
+$\Delta$regard género (BOLD) & -0,083 & [-0,140; -0,029] & -0,52 & -0,09 & 0,070 & 11/30 (0,951) \\
+$\Delta$regard profesión (BOLD) & 0,050 & [-0,016; 0,119] & 0,26 & 0,24 & 0,382 & 15/30 (0,572) \\
+\bottomrule
+\end{tabularx}
+\par\smallskip\footnotesize $d$ = Cohen; $\delta$ = Cliff; $p_W$ = Wilcoxon; $p_s$ = signos.
+\end{table}

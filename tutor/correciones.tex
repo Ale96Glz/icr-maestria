@@ -1,0 +1,440 @@
+% =============================================================================
+% correciones.tex — Guía de correcciones (feedback del tutor + datos en resultados/)
+% Trabajo auxiliar; no forma parte de ICR Final.tex hasta que se incorporen los cambios.
+% =============================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{xurl}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{hyperref}
+
+\geometry{margin=2.5cm}
+\hypersetup{hidelinks,colorlinks=true,linkcolor=black,urlcolor=black}
+\Urlmuskip=0mu plus 2mu
+\setlength{\emergencystretch}{2em}
+\setlength{\tabcolsep}{5pt}
+
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\newcommand{\archivo}[1]{\texttt{\nolinkurl{#1}}}
+
+\title{Guía de correcciones --- tesis ICR}
+\author{Alejandro González Osorio}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+Plan ordenado para responder al tribunal: alinear el \textbf{resumen} con el capítulo~5 y el análisis
+\textit{género--profesión}, cerrar la \textbf{reproducibilidad} con los repositorios de entrenamiento y
+evaluación, y corregir referencias y redacción heredadas (métricas globales 9.40 / $-$6.6 / +11.0,
+BOLD, Llama, ``multimodal'').
+\end{abstract}
+
+\tableofcontents
+\clearpage
+
+% =============================================================================
+\section{Por dónde empezar}
+% =============================================================================
+
+Este documento no sustituye la tesis: es una \textbf{hoja de ruta} para leer en paralelo al PDF de la tesis y al feedback del tutor.
+Cada sección enlaza \emph{qué está mal}, \emph{con qué dato corregirlo} y \emph{dónde tocar} \archivo{ICR Final.tex}.
+El orden sugerido evita re-trabajo (primero el resumen, luego el detalle, después el marco experimental):
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*, itemsep=0.35em]
+  \item \textbf{Resumen} en \archivo{ICR Final.tex}: cifras y alcance BOLD (sección~\ref{sec:resumen}).
+  \item \textbf{Detalles puntuales} en caps.~2, 5 y 6 (sección~\ref{sec:puntuales}).
+  \item \textbf{Marco experimental} en pasado y ficha de reproducibilidad (secciones~\ref{sec:tiempo} y~\ref{sec:repro}).
+  \item \textbf{Conclusiones} y bibliografía (secciones~\ref{sec:otros} y~\ref{sec:bib}).
+  \item \textbf{Revisión final} antes de envío (sección~\ref{sec:qa}).
+\end{enumerate}
+
+% =============================================================================
+\section{Resumen alineado con el capítulo 5}
+\label{sec:resumen}
+% =============================================================================
+
+\subsection{Qué está mal hoy (el tutor tiene razón)}
+
+El capítulo~5 ya narra el barrido género--profesión con tablas y figuras en
+\archivo{resultados/genero\_profesion/}; el resumen, en cambio, sigue mezclando cifras de un export
+global anterior. La tabla~\ref{tab:dos_fuentes} resume esa divergencia --- conviene tenerla abierta al
+reescribir el resumen.
+
+\begin{table}[ht]
+\centering\small
+\caption{Dos fuentes de números: no mezclar en el resumen.}
+\label{tab:dos_fuentes}
+\begin{tabularx}{\dimexpr\linewidth-2pt\relax}{@{}L{0.27\linewidth}X X@{}}
+\toprule
+\textbf{Tema} & \textbf{Origen antiguo (evitar)} & \textbf{Origen canónico (cap.~5)} \\
+\midrule
+Cifra tipo 9.40~p.p.
+& Media global inter+intra+CrowS (\archivo{figuras\_tesis/}, CSV \emph{completo})
+& $M_{GP}\approx 4.15$ o $\Delta$SS inter género $8.68$~p.p. \\
+LMS / ICAT del resumen
+& $-$6.6 y +11.0 (SS/LMS/ICAT global en export antiguo)
+& Costes en tablas GP y texto del cap.~5 \\
+Llama y el \emph{prompt}
+& ``El patrón se invirtió''
+& Tabla~\ref{tab:plan_familia}: \emph{dataset + prompt} sigue mejorando medias agregadas \\
+BOLD
+& ``género, raza y profesión'' en el análisis
+& Solo \textbf{género y profesión} en figuras/tablas del cap.~5 \\
+Wording
+& ``evaluación multimodal''
+& ``multi-benchmark'' o protocolo complementario (todo texto) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection[Cifras de referencia (GPT-2 Medium, 1\% LoRA)]{Cifras de referencia (GPT-2 Medium, dataset + prompt, 1\,\% LoRA)}
+
+Fuente: \archivo{resultados/genero\_profesion/analisis/datos/metricas\_genero\_profesion.csv}.
+
+\begin{center}
+\small
+\begin{tabular}{@{}lr@{}}
+\toprule
+\textbf{Indicador} & \textbf{Valor (aprox.)} \\
+\midrule
+$\Delta$SS \emph{inter}, género & 8.68~p.p. \\
+$\Delta$SS \emph{inter}, profesión & 7.50~p.p. \\
+$\Delta$STS socioeconómico (CrowS) & $-0.58$~p.p. \\
+$M_{GP}$ (media de seis componentes GP) & 4.15~p.p. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Borrador de párrafo para el resumen}
+
+\textit{Validar con el director; sustituye el bloque actual de resultados en el resumen.}
+
+\begin{quote}
+\small
+Los resultados mostraron que LoRA reduce el sesgo estereotípico en el barrido de treinta
+configuraciones. En la configuración de referencia del análisis focalizado (GPT-2 Medium, corpus con
+\emph{prompt} de cambio de género en la tokenización, adaptador al 1\,\% de parámetros entrenables),
+la mejora en StereoSet \emph{intersentence} alcanzó 8.68~p.p.\ en género y 7.50~p.p.\ en profesión,
+con un retroceso de 0.58~p.p.\ en el representante socioeconómico de CrowS-Pairs. En GPT-2, la ruta
+\emph{dataset + prompt} amplificó de forma consistente la corrección frente a la inyección directa de
+pares; en Llama~3.2 la respuesta fue asimétrica: el \emph{prompt} mejoró varios indicadores de
+selección forzada, pero con mayor coste en fluidez (LMS \emph{intra}) y con comportamiento distinto
+según categoría (por ejemplo profesión \emph{intersentence}). Se observó saturación con adaptadores al
+3\,\% frente al 1\,\% en varios modelos GPT-2. BOLD mostró un desacople: la ruta sin \emph{prompt}, pese
+a mejorar el SS, redujo drásticamente la longitud media de generación (del orden de 15 a 2--3 tokens en
+casos extremos). La evaluación integró StereoSet, CrowS-Pairs y BOLD en los dominios género y
+profesión como benchmarks complementarios de texto.
+\end{quote}
+
+\subsection[Cambios concretos en ICR Final.tex]{Cambios concretos en \archivo{ICR Final.tex}}
+
+Tras validar el borrador con el director, aplicar en el resumen tres toques localizados:
+\textbf{(i)}~alcance BOLD solo género y profesión; \textbf{(ii)}~párrafo de resultados como arriba, sin
+9.40, $-$6.6 ni +11.0; \textbf{(iii)}~sustituir ``multimodal'' por ``multi-benchmark'' (aprox.\ líneas
+194, 196 y 198).
+
+\subsection{Llama y el \emph{prompt}: redacción sin simplificar de más}
+
+No conviene afirmar una ``inversión global'' del \emph{prompt} en Llama. En el barrido GP, la técnica
+\emph{dataset + prompt} mejora las medias agregadas frente a solo dataset (tabla~\ref{tab:plan_familia}),
+pero el comportamiento por categoría sigue siendo asimétrico --- el borrador del resumen ya lo refleja.
+
+\begin{table}[ht]
+\centering\small
+\caption{Familia $\times$ técnica (medias sobre configuraciones).}
+\label{tab:plan_familia}
+\begin{tabular}{@{}llrr@{}}
+\toprule
+\textbf{Familia} & \textbf{Técnica} & $\overline{\Delta}$SS inter género & $\overline{\Delta}$STS género \\
+\midrule
+GPT-2 & Solo dataset & 0.73 & 2.59 \\
+GPT-2 & Dataset + prompt & 7.81 & 3.82 \\
+Llama & Solo dataset & $-0.55$ & 3.82 \\
+Llama & Dataset + prompt & 4.41 & 6.81 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% =============================================================================
+\section{Correcciones puntuales en el cuerpo}
+\label{sec:puntuales}
+% =============================================================================
+
+Con el resumen alineado, estos son los ajustes de una sola pasada en el cuerpo (referencias, escalas del
+modelo y conclusiones):
+
+\begin{itemize}[leftmargin=*, itemsep=0.4em]
+  \item \textbf{Sección~5.5.1} (aprox.\ líneas 2444 y 2477): sustituir ``Tabla~1'' y ``Figura~1'' por
+        las etiquetas \texttt{\textbackslash ref\{tab:ex\_panorama\_baseline\}} y
+        \texttt{\textbackslash ref\{fig:ex\_baseline\}}.
+  \item \textbf{Sección~5.5.1} (aprox.\ línea 2481): ``Tabla~3'' $\rightarrow$ referencia cruzada a la tabla CSP correcta.
+  \item \textbf{Sección~2.4.5} (aprox.\ línea 1303): ``cuatro escalas'' de GPT-2 $\rightarrow$ \textbf{tres} (Base, Medium, XL).
+  \item \textbf{Conclusiones}: revisar ``multimodal'' y cifras heredadas del pipeline antiguo.
+\end{itemize}
+
+% =============================================================================
+\section{Tiempo verbal}
+\label{sec:tiempo}
+% =============================================================================
+
+El capítulo~5 ya describe experimentos realizados; el capítulo~4 y la sección~1.3 aún usan futuro
+(\emph{se empleará}, \emph{se ejecutarán}). Pasar a pretérito o pretérito perfecto, por ejemplo:
+
+\begin{itemize}[nosep]
+  \item ``Se empleó Python\ldots''
+  \item ``Los experimentos se ejecutaron en\ldots''
+  \item ``Se calcularon las métricas SS, LMS e ICAT\ldots''
+\end{itemize}
+
+Zonas a revisar: marco experimental (aprox.\ líneas 2118--2160) y metodología del cap.~1 (aprox.\ 301--324).
+
+% =============================================================================
+\section{Cómo se hicieron los experimentos y cómo repetirlos}
+\label{sec:repro}
+% =============================================================================
+
+El barrido no es un único modelo ni un único entrenamiento. Cada experimento es una terna
+\textbf{modelo base $\times$ porcentaje de parámetros entrenables $\times$ técnica de mitigación}.
+Con cinco modelos, tres porcentajes y dos técnicas hay \textbf{30 entrenamientos}. Cada uno se evalúa
+dos veces (selección forzada y generación), de ahí las 60 filas de la tabla maestra.
+
+\subsection{Qué se varió}
+
+\begin{itemize}[leftmargin=*, itemsep=0.35em]
+  \item \textbf{Modelos.} GPT-2 Base, Medium y XL; Llama~3.2 Instruct de 1B y de 3B. Los pesos base no se
+        actualizan: solo el adaptador LoRA (en los modelos grandes, en precisión QLoRA de 4 bits).
+  \item \textbf{Tamaño del adaptador.} 1\,\%, 2\,\% y 3\,\% de parámetros entrenables. Ese porcentaje no se
+        escribe a mano como rango $r$: el script \texttt{config\_detect} lo traduce a $r$ y a los módulos
+        que se adaptan. En el código, $\alpha = 2r$ y el dropout es 0.05.
+  \item \textbf{Técnica.} \emph{Solo dataset}: el modelo ve pares o textos de contraejemplos de género, sin
+        instrucción extra. \emph{Dataset + prompt}: el mismo tipo de par se envuelve en una plantilla que
+        pide reescribir la frase intercambiando el género; la pérdida se calcula sobre la continuación,
+        no sobre la instrucción.
+\end{itemize}
+
+\subsection{Qué se hizo en cada entrenamiento}
+
+Para una terna concreta el procedimiento fue el siguiente.
+
+\begin{enumerate}[leftmargin=*, itemsep=0.4em]
+  \item Elegir el identificador de Hugging Face del modelo y el porcentaje (1.0, 2.0 o 3.0).
+  \item Calcular $r$, $\alpha$ y la lista de módulos con \texttt{config\_detect}.
+  \item Cargar el corpus de \archivo{debias\_lora/data/}. La ruta \emph{solo dataset} puede ir por el
+        JSONL de textos (\archivo{train\_lora\_mitigation.py}, 3 épocas) o por pares
+        (\archivo{train/train.py}). La ruta \emph{dataset + prompt} va por \archivo{train/train.py}
+        (5 épocas) con la plantilla \texttt{plain} o \texttt{chat}.
+  \item Entrenar con AdamW, tasa $5\times 10^{-4}$, lote 8 por GPU y longitud máxima 128.
+        \archivo{train/train.py} acumula 4 pasos de gradiente; el otro script no.
+  \item Guardar el adaptador. El nombre de la carpeta lleva el modelo, el porcentaje y la técnica
+        (\texttt{cda} o \texttt{debias}), porque esa ruta es la que después identifica la configuración.
+\end{enumerate}
+
+\noindent
+Lo que el capítulo~4 todavía no puede afirmar con una tabla es \emph{qué script y qué plantilla}
+se usaron en cada una de las 30 carpetas. Los valores por defecto de arriba están en el código;
+conviene confirmarlos contra la bitácora o los logs antes de copiarlos como si fueran únicos.
+
+\subsection{Qué se hizo en cada evaluación}
+
+El adaptador no se vuelve a entrenar. En \archivo{bias\_eval} se carga el modelo base y, en una segunda
+pasada, el mismo modelo más el adaptador.
+
+\begin{enumerate}[leftmargin=*, itemsep=0.4em]
+  \item \textbf{StereoSet y CrowS-Pairs}, en inglés, lote 8. El modelo elige entre continuaciones; de ahí
+        salen SS, LMS e ICAT (StereoSet) y STS (CrowS-Pairs), para el base y para el base+LoRA.
+  \item \textbf{BOLD}, aparte. El modelo \emph{genera} a partir de un comienzo de frase
+        (\texttt{do\_sample}, temperatura 0.7, \texttt{top\_p} 0.9, una secuencia). El regard lo puntúa
+        el clasificador \archivo{sasha/regardv3}. En la infraestructura los dominios por defecto incluyen
+        raza; el análisis del capítulo~5 se queda en género y profesión.
+  \item Cada pasada deja un JSON de resumen. Al unirlos, una configuración ocupa dos filas en
+        \archivo{dataset\_mitigacion\_tesis.csv}: una con \texttt{suite\_kind} de StereoSet/CrowS y otra
+        de BOLD, ligadas por \texttt{exp\_group}.
+\end{enumerate}
+
+\subsection{Cómo repetir una configuración}
+
+Hace falta el mismo modelo, el mismo corpus, el mismo $(r,\alpha)$, la misma plantilla y la misma semilla
+si se guardó. Sin la semilla y sin el log del script, una reejecución se acerca al resultado pero no tiene
+por qué coincidir token a token en BOLD, porque la generación es muestral. StereoSet y CrowS-Pairs, al ser
+de elección entre opciones, son más estables si el adaptador es el mismo.
+
+\subsection{Dónde vive cada pieza}
+
+\begin{description}[leftmargin=2.4cm, style=nextline, itemsep=0.3em]
+  \item[Entrenamiento]
+        \archivo{D:/Tesis/debias\_lora}: scripts LoRA/QLoRA y la carpeta \archivo{data/}.
+  \item[Evaluación]
+        \archivo{D:/Tesis/bias\_eval}: StereoSet, CrowS-Pairs y BOLD, comparando baseline y adaptador.
+  \item[Tabla maestra]
+        \archivo{resultados/dataset\_mitigacion\_tesis.csv}: 60 filas, 30 configuraciones.
+  \item[Lo que cita el cap.~5]
+        \archivo{resultados/genero\_profesion/}: CSV del recorte GP, tablas y figuras \texttt{ex\_*}.
+\end{description}
+
+Las tablas que siguen son la ficha para pegar (o resumir) en el capítulo~4. No hace falta reproducirlas
+enteras en el resumen.
+
+\subsection{Rutas de mitigación en la tesis}
+
+\begin{tabularx}{\linewidth}{@{}L{0.22\linewidth}L{0.22\linewidth}L{0.48\linewidth}@{}}
+\toprule
+\textbf{Nombre en la tesis} & \textbf{Código (\texttt{technique})} & \textbf{Script habitual} \\
+\midrule
+Solo dataset & \texttt{cda} & JSONL: \archivo{train\_lora\_mitigation.py}; o pares: \archivo{train.train} \\
+Dataset + prompt & \texttt{debias} & \archivo{train.train} (plantilla en tokenización) \\
+\bottomrule
+\end{tabularx}
+
+\smallskip
+\noindent\textit{Confirmar en bitácora qué script se usó en cada uno de los 30 entrenamientos.}
+
+\subsection[Tamaño de los corpus]{Tamaño de los corpus (\archivo{debias\_lora/data/})}
+
+\begin{tabularx}{\linewidth}{@{}L{0.42\linewidth}cL{0.44\linewidth}@{}}
+\toprule
+\textbf{Archivo} & \textbf{$N$} & \textbf{Notas} \\
+\midrule
+\archivo{gender\_debias\_lora.json} & 2000 & Pares femenino/masculino (roles) \\
+\archivo{gender\_mitigation\_train.jsonl} & 1982 & Columna \texttt{text}; cinco facetas ($\sim$392--400 c/u) \\
+\archivo{gender\_debias\_dda.json} & 1000 & Incluye \texttt{biased\_prompt} (STEM; verificar uso en entrenamiento) \\
+\archivo{gender\_debias\_names.json} & 1000 & Variante con nombres \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Texto del \emph{prompt} en entrenamiento}
+
+Definido en \archivo{debias\_lora/train/train.py}:
+
+\begin{description}[leftmargin=2.5cm, style=nextline, font=\normalfont]
+  \item[\texttt{plain}]
+        \texttt{Context: \{entrada\} => \{salida\}} (pérdida solo después de \texttt{=>}).
+  \item[\texttt{chat}]
+        \emph{Rewrite the following sentence by swapping the gender. Sentence: \{entrada\}}
+        + respuesta del asistente.
+  \item[CDA JSONL]
+        Secuencia \texttt{text} + EOS; sin prefijo extra en \archivo{train\_lora\_mitigation.py}.
+\end{description}
+
+\subsection{Hiperparámetros por defecto en código}
+
+\begin{tabularx}{\dimexpr\linewidth-2pt\relax}{@{}L{0.31\linewidth}X X@{}}
+\toprule
+\textbf{Parámetro} & \textbf{\archivo{train.train}} & \textbf{\archivo{train\_lora\_mitigation.py}} \\
+\midrule
+Épocas & 5 & 3 \\
+Tasa de aprendizaje & $5\times 10^{-4}$ & $5\times 10^{-4}$ \\
+Batch por GPU & 8 & 8 \\
+Acumulación de gradiente & 4 & --- \\
+\texttt{max\_length} & 128 & 128 \\
+Dropout LoRA & 0.05 & 0.05 \\
+QLoRA & NF4, \texttt{--qlora} & idem \\
+Optimizador & AdamW (defecto HF) & idem \\
+\bottomrule
+\end{tabularx}
+
+\smallskip
+\noindent
+El rango $r$ y $\alpha$ se obtienen con el porcentaje objetivo (1, 2 o 3\,\%):
+\archivo{uv run python -m utils.config\_detect <modelo\_hf> <porcentaje>};
+regla $\alpha = 2r$, dropout 0.05.
+
+\begin{table}[ht]
+\centering\small
+\caption{Ejemplo ya calculado: GPT-2 Medium al 1\,\%}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Modelo} & \textbf{\%} & $r$ & $\alpha$ & \textbf{Módulos} \\
+\midrule
+GPT-2 Medium & 1.0 & 9 & 18 & \texttt{c\_attn}, \texttt{c\_proj}, \texttt{c\_fc} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent
+Completar filas restantes (Base, XL, Llama 1B/3B; 2\,\% y 3\,\%) y pegar la tabla final en el capítulo~4.
+
+\subsection[Evaluación (bias\_eval)]{Evaluación (\archivo{bias\_eval})}
+
+\begin{tabularx}{\linewidth}{@{}L{0.24\linewidth}L{0.70\linewidth}@{}}
+\toprule
+\textbf{Bloque} & \textbf{Detalle a documentar en la tesis} \\
+\midrule
+StereoSet / CrowS &
+Datos locales en \archivo{data/stereoset/} y \archivo{data/crowspair/}; \texttt{batch\_size=8}; inglés salvo \texttt{-l}. \\
+BOLD &
+Dataset \archivo{AlexaAI/bold}; dominios por defecto género, raza y profesión en \archivo{config.py}; el cap.~5 reporta solo GP. \\
+Generación &
+\texttt{do\_sample=True}, $T=0.7$, \texttt{top\_p=0.9}, una secuencia por prompt; \texttt{max\_new\_tokens}: 20 (config) o 30 (módulo) --- fijar el usado en la corrida. \\
+Regard &
+Modelo \archivo{sasha/regardv3}. \\
+Comando tipo &
+\archivo{uv run python run.py evaluation -m <modelo> -a <adaptador> -q --bold ...} \\
+\bottomrule
+\end{tabularx}
+
+% =============================================================================
+\section{Otros ajustes de coherencia}
+\label{sec:otros}
+% =============================================================================
+
+\begin{itemize}[leftmargin=*, itemsep=0.35em]
+  \item No volver a citar \textbf{9.40} como cifra principal sin aclarar que es métrica global antigua.
+  \item Tratar \archivo{resultados/analisis/} y \archivo{figuras\_tesis/} como \emph{legacy} frente al pipeline GP.
+  \item En limitaciones: BOLD raza evaluable en infraestructura pero no analizado en el eje GP; archivar
+        \archivo{.env} o logs si existen para cerrar reproducibilidad al 100\%.
+\end{itemize}
+
+% =============================================================================
+\section{Bibliografía}
+\label{sec:bib}
+% =============================================================================
+
+\begin{enumerate}[label=\arabic*., leftmargin=*]
+  \item Compilar con \texttt{bibtex} y corregir avisos \texttt{empty year} / \texttt{empty journal}.
+  \item Completar \texttt{year}, revista o \texttt{booktitle} en \archivo{bibliografia\_icr.bib}.
+  \item Verificar en el PDF que cada referencia del cap.~2--3 muestra año y fuente.
+\end{enumerate}
+
+% =============================================================================
+\section{Checklist antes del envío}
+\label{sec:qa}
+% =============================================================================
+
+\begin{itemize}[label=$\square$, leftmargin=*]
+  \item Cada cifra del resumen aparece en el cap.~5 o en \archivo{metricas\_genero\_profesion.csv}.
+  \item Cap.~4 en pasado + tabla de hiperparámetros.
+  \item Sin ``Tabla~1'' / ``Figura~1'' literales en resultados.
+  \item Tres escalas GPT-2 en todo el documento.
+  \item Compilación \texttt{pdflatex} + \texttt{bibtex} sin errores graves.
+  \item Releer el resumen junto a la Tabla~\ref{tab:plan_familia}.
+\end{itemize}
+
+% =============================================================================
+\section{Comandos de registro}
+% =============================================================================
+
+Para documentar en nota al margen del capítulo~4 o en anexo, estos comandos regeneran $r$ y $\alpha$ y
+lanzan una evaluación de ejemplo:
+
+\begin{flushleft}
+\small\ttfamily
+\detokenize{cd D:\Tesis\debias_lora}\\
+\detokenize{uv run python -m utils.config_detect gpt2-medium 1.0}\\
+\detokenize{uv run python -m utils.config_detect meta-llama/Llama-3.2-1B-Instruct 1.0}\\[0.6em]
+\detokenize{cd D:\Tesis\bias_eval}\\
+\detokenize{uv run python run.py evaluation -m gpt2-medium -a adapters\RUTA -q --bold}
+\end{flushleft}
+
+\end{document}

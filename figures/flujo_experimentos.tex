@@ -1,0 +1,186 @@
+% flujo_experimentos.tex — Pipeline experimental (Figura en ICRv7)
+% Uso:  \resizebox{\textwidth}{!}{\input{figures/flujo_experimentos.tex}}
+
+\begin{tikzpicture}[
+    font=\small,
+    >={Stealth[length=3mm, width=2mm]},
+    % ── Estilos de nodos ────────────────────────────
+    dataset/.style={
+        rectangle, rounded corners=3pt, drop shadow,
+        draw=orange!70!black, thick, fill=orange!8,
+        text width=3.2cm, align=center, minimum height=1.2cm
+    },
+    proceso/.style={
+        rectangle, rounded corners=3pt, drop shadow,
+        draw=cyan!60!black, thick, fill=cyan!5,
+        text width=3.2cm, align=center, minimum height=1.2cm
+    },
+    loranode/.style={
+        rectangle, rounded corners=3pt, drop shadow,
+        draw=blue!60!violet, thick, fill=blue!3!violet!2!white,
+        text width=4cm, align=center, minimum height=1.4cm
+    },
+    escala/.style={
+        rectangle, rounded corners=3pt, drop shadow,
+        draw=yellow!50!orange, line width=1.5pt, fill=yellow!12,
+        text width=3.8cm, align=center, minimum height=1.2cm
+    },
+    peso/.style={
+        rectangle, rounded corners=3pt, drop shadow,
+        draw=green!55!black, thick, fill=green!6,
+        text width=1.5cm, align=center, minimum height=0.9cm
+    },
+    evalnode/.style={
+        rectangle, rounded corners=3pt, drop shadow,
+        draw=violet!65!black, thick, fill=violet!5,
+        text width=3.2cm, align=center, minimum height=1.2cm
+    },
+    benchnode/.style={
+        rectangle, rounded corners=3pt, drop shadow,
+        draw=teal!65!black, thick, fill=teal!5,
+        text width=4cm, align=center, minimum height=1.1cm
+    },
+    metS/.style={
+        rectangle, rounded corners=3pt, drop shadow,
+        draw=red!55!black, thick, fill=red!5,
+        text width=3cm, align=center, minimum height=1.1cm
+    },
+    metR/.style={
+        rectangle, rounded corners=3pt, drop shadow,
+        draw=green!50!black, thick, fill=green!5,
+        text width=2.8cm, align=center, minimum height=1.1cm
+    },
+    resultado/.style={
+        rectangle, rounded corners=8pt, drop shadow,
+        draw=magenta!55!black, line width=1.2pt, fill=magenta!5,
+        text width=3.4cm, align=center, minimum height=1cm
+    },
+    % ── Estilos de flechas ──────────────────────────
+    arrow/.style={->, thick, draw=gray!70},
+    phasearrow/.style={->, line width=1pt, draw=gray!45, densely dashed},
+    % ── Estilo de cajas de fase ─────────────────────
+    fasebox/.style={rounded corners=10pt, thick, inner sep=12pt},
+    faselabel/.style={font=\normalsize\bfseries}
+]
+
+% ═══════════════════════════════════════════════════
+% FASE 1 — Preparación de los datos  (arriba-izq)
+% ═══════════════════════════════════════════════════
+
+\node[dataset] (D1) at (0, 9) {%
+    \textbf{Dataset~I · STEM}\\[2pt]
+    Pares contrafactuales en\\dominio técnico-científico};
+
+\node[proceso] (T1) at (5, 9) {%
+    Tokenización con\\[2pt]
+    \textbf{prompting de género}};
+
+\node[dataset] (D2) at (0, 6) {%
+    \textbf{Dataset~II · Roles}\\
+    \textbf{de género}\\[2pt]
+    Facetas: liderazgo,\\resiliencia, empatía\ldots};
+
+\node[proceso] (T2) at (5, 6) {%
+    \textbf{Inyección directa}\\[2pt]
+    de pares\\contrafactuales};
+
+\draw[arrow] (D1) -- (T1);
+\draw[arrow] (D2) -- (T2);
+
+% ═══════════════════════════════════════════════════
+% FASE 2 — Arquitectura y Entrenamiento  (centro)
+% ═══════════════════════════════════════════════════
+
+\node[loranode] (LORA) at (14, 4.5) {%
+    \textbf{LoRA / QLoRA}\\[2pt]
+    \scriptsize GPT-2 Base · Medium · XL\\[-1pt]
+    \scriptsize Llama-3.2-1B · 3B Instruct\\[3pt]
+    \small Módulos Attention + MLP\\[1pt]
+    \textit{Pesos base congelados}};
+
+\node[escala] (ESCALA) at (14, 1.8) {%
+    \textbf{Escalado Paramétrico}\\[2pt]
+    \scriptsize $2\;\text{corpora}\times 5\;\text{modelos}\times 3\;\text{niveles}$\\[1pt]
+    \small$=\;\mathbf{30}$ \textbf{entrenamientos}};
+
+\node[peso] (P1) at (11, -0.5) {\textbf{1\,\%}\\Pesos};
+\node[peso] (P2) at (14, -0.5) {\textbf{2\,\%}\\Pesos};
+\node[peso] (P3) at (17, -0.5) {\textbf{3\,\%}\\Pesos};
+
+\draw[arrow] (LORA)  -- (ESCALA);
+\draw[arrow] (ESCALA) -- node[left,  font=\scriptsize, pos=0.6] {${\approx}\!1\%$} (P1);
+\draw[arrow] (ESCALA) -- (P2);
+\draw[arrow] (ESCALA) -- node[right, font=\scriptsize, pos=0.6] {${\approx}\!3\%$} (P3);
+
+% ═══════════════════════════════════════════════════
+% FASE 3 — Evaluación y Contraste  (abajo-der)
+% ═══════════════════════════════════════════════════
+
+\node[evalnode] (VS) at (25, -1.5) {%
+    Modelo con adaptador\\[2pt]
+    \textbf{vs.}\\[2pt]
+    Modelo base sin LoRA};
+
+\node[benchnode] (BENCH) at (25, -3.8) {%
+    \textbf{Benchmarks}\\[2pt]
+    StereoSet · CrowS-Pairs · BOLD};
+
+\node[metS] (SESGO) at (22.2, -6) {%
+    \textbf{Métricas de Sesgo}\\[2pt]
+    Stereotype Score\\PLL · Regard};
+
+\node[metR] (REND) at (27.8, -6) {%
+    \textbf{Métricas de}\\
+    \textbf{Rendimiento}\\[2pt]
+    LMS · ICAT};
+
+\node[resultado] (TRADEOFF) at (25, -8.2) {%
+    \textbf{Análisis del trade-off}\\[2pt]
+    equidad $\Leftrightarrow$ rendimiento};
+
+\draw[arrow] (VS)    -- (BENCH);
+\draw[arrow] (BENCH)  -- (SESGO);
+\draw[arrow] (BENCH)  -- (REND);
+\draw[arrow] (SESGO)  -- (TRADEOFF);
+\draw[arrow] (REND)   -- (TRADEOFF);
+
+% ═══════════════════════════════════════════════════
+% Flechas inter-fase  (diagonales punteadas)
+% ═══════════════════════════════════════════════════
+
+\draw[phasearrow] (T1.east)  to[out=-10, in=150] (LORA.north west);
+\draw[phasearrow] (T2.east)  to[out=-5,  in=170] (LORA.west);
+
+\draw[phasearrow] (P1.south) to[out=-30, in=160] (VS.north west);
+\draw[phasearrow] (P2.south) to[out=-25, in=140] (VS.north);
+\draw[phasearrow] (P3.east)  to[out=-10, in=115] (VS.north east);
+
+% ═══════════════════════════════════════════════════
+% Cajas de fase  (capa de fondo)
+% ═══════════════════════════════════════════════════
+
+\begin{pgfonlayer}{background}
+    \node[fasebox, fit=(D1)(T1)(D2)(T2),
+          fill=blue!4, draw=blue!45!black] (F1box) {};
+
+    \node[fasebox, fit=(LORA)(ESCALA)(P1)(P2)(P3),
+          fill=green!4, draw=green!45!black] (F2box) {};
+
+    \node[fasebox, fit=(VS)(BENCH)(SESGO)(REND)(TRADEOFF),
+          fill=violet!4, draw=violet!40!black] (F3box) {};
+\end{pgfonlayer}
+
+% ═══════════════════════════════════════════════════
+% Etiquetas de fase
+% ═══════════════════════════════════════════════════
+
+\node[faselabel, blue!55!black, above=3pt of F1box.north]
+    {\textsc{Fase~1} --- Preparación de los datos};
+
+\node[faselabel, green!45!black, above=3pt of F2box.north]
+    {\textsc{Fase~2} --- Arquitectura y Entrenamiento};
+
+\node[faselabel, violet!50!black, above=3pt of F3box.north]
+    {\textsc{Fase~3} --- Evaluación y Contraste};
+
+\end{tikzpicture}
