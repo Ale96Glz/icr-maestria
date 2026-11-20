@@ -37,6 +37,8 @@ Todo lo numérico que sostiene el capítulo 5 está en [`resultados/`](resultado
 
 Los experimentos no se entrenan dentro de esta carpeta. El entrenamiento está en `D:\Tesis\debias_lora` y la evaluación en `D:\Tesis\bias_eval`. Cada configuración es un modelo (GPT-2 Base, Medium o XL, o Llama 3.2 de 1B o 3B), un porcentaje de LoRA (1, 2 o 3 %) y una técnica (solo dataset, o dataset + prompt).
 
+El detalle para repetir los 30 entrenamientos ($r$, $\alpha$, hiperparámetros, corpus, prompts y parámetros de BOLD) está en [`REPRODUCIBILIDAD.md`](REPRODUCIBILIDAD.md).
+
 ## Qué detectó el tutor
 
 El contraste con `ICR Final.tex` y con `resultados/genero_profesion/` confirma los señalamientos. El detalle, el borrador del resumen y el procedimiento de los experimentos están en [`tutor/correciones.tex`](tutor/correciones.tex) (PDF: [`tutor/correciones.pdf`](tutor/correciones.pdf)).
